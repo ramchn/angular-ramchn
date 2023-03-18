@@ -3,21 +3,25 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { AppComponent } from './app.component';
-import { TopBarComponent } from './top-bar/top-bar.component';
-import { ProductListComponent } from './product-list/product-list.component';
-import { ProductAlertsComponent } from './product-alerts/product-alerts.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
-import { CartComponent } from './cart/cart.component';
+import { AppComponent } from './components/app.component';
+import { TopBarComponent } from './components/top-bar/top-bar.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
+import { ProductAlertsComponent } from './components/product-alerts/product-alerts.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { CartComponent } from './components/cart/cart.component';
+import { LoginComponent } from './components/login/login.component';
+
+import { AuthGuard } from './guard/auth.guard';
 
 @NgModule({
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: 'products', component: ProductListComponent },
-      { path: 'products/:productId', component: ProductDetailsComponent },
-      { path: 'cart', component: CartComponent },
+      { path: 'products', component: ProductListComponent, canActivate: [AuthGuard] },
+      { path: 'products/:productId', component: ProductDetailsComponent, canActivate: [AuthGuard] },
+      { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
+      { path: '', component: LoginComponent },
     ])
   ],
   declarations: [
@@ -26,7 +30,8 @@ import { CartComponent } from './cart/cart.component';
     ProductListComponent,
     ProductAlertsComponent,
     ProductDetailsComponent,
-    CartComponent
+    CartComponent,
+    LoginComponent
   ],
   bootstrap: [
     AppComponent
